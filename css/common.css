@@ -506,9 +506,9 @@ input[type="date"] {
     width: 20%; /* Adjust width */
     padding: 8px; /* Add some padding */
     font-size: 16px; /* Increase font size */
-    border: 2px solid; /* Ensure border is visible */
+    border: 1px solid; /* Ensure border is visible */
     border-image: linear-gradient(45deg, #6a0572, #a3008f) 1; /* Gradient border */
-    border-radius: 5px; /* Slightly rounded corners */
+    border-radius: 8px; /* Slightly rounded corners */
     text-align: center; /* Center the text */
     outline: none; /* Remove default outline */
 }
