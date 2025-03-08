@@ -167,7 +167,11 @@ circle.fg {
 #nextDayBtn:hover {
     opacity: 0.8;
 }
-
+@media (max-width: 768px) {  /* Hide on screens smaller than 768px */
+    #prevDay, #nextDay {
+        display: none !important;
+    }
+}
 /* Date Picker */
 #datePicker {
     padding: 8px 12px;
