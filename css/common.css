@@ -168,7 +168,7 @@ circle.fg {
     opacity: 0.8;
 }
 @media (max-width: 768px) {  /* Hide on screens smaller than 768px */
-    #prevDay, #nextDay {
+    #prevDayBtn, #nextDayBtn {
         display: none !important;
     }
 }
