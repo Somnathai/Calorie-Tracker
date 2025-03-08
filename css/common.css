@@ -1,0 +1,524 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root { 
+    --general-btns-color: linear-gradient(135deg, #d11c97, #7b1fa2); 
+}
+body {
+    margin: 0;
+    padding: .5rem;
+    background-color: var(--backround-color);
+}
+
+* {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 50%;
+    max-width: 600px;
+    min-width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--container-background-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: "Fredoka", sans-serif;
+    font-weight: 600;
+    color: var(--primary-text-color);
+}
+
+/* --- Theme toggler --- */
+
+.theme-toggler {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.theme-toggler > input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    overflow: hidden;
+    border-radius: 17px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    transition: .4s ease-in-out;
+}
+
+.slider::before,
+.slider::after {
+    content: "";
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+    transition: .2s ease-in-out;
+}
+
+.slider::before {
+    background-image: url(../assets/brightness.png);
+}
+
+.slider::after {
+    background-image: url(../assets/moon.png);
+    transform: translateX(-20px);
+}
+
+.theme-toggler > input:checked + .slider::after {
+    transform: translateX(0);
+}
+
+.theme-toggler > input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* --- Circle progress bar --- */
+
+.circle-container {
+    text-align: center;
+    padding: 1rem;
+}
+
+circle.fg {
+    transform: rotate(-90deg);
+    transform-origin: 50px 50px;
+}
+
+.circular-progress {
+    --size: 100px;
+    --half-size: calc(var(--size) / 2);
+    --stroke-width: 10px;
+    --radius: calc((var(--size) - var(--stroke-width)) / 2);
+    --circumference: calc(var(--radius) * pi * 2);
+    --dash: calc((var(--progress) * var(--circumference)) / 100);
+}
+
+.circular-progress circle {
+    stroke-width: var(--stroke-width);
+    fill: none;
+    stroke-linecap: round;
+}
+  
+.circular-progress circle.bg {
+    stroke: #ddd;
+}
+
+.circular-progress circle.fg {
+    opacity: 0;
+    transform: rotate(-90deg);
+    transform-origin: var(--half-size) var(--half-size);
+    stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+    transition: stroke-dasharray 0.3s linear 0s;
+    stroke: #5394fd;
+}
+
+/* --- Progress block --- */
+.date-picker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Adds space between elements */
+    margin-top: 15px;
+}
+
+/* Styling for Buttons */
+#prevDayBtn,
+#nextDayBtn {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #ffffff;
+    background: var(--general-btns-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+#prevDayBtn:hover,
+#nextDayBtn:hover {
+    opacity: 0.8;
+}
+
+/* Date Picker */
+#datePicker {
+    padding: 8px 12px;
+    border: 1px solid var(--primary-text-color);
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+    background-color: var(--container-background-color);
+    color: var(--primary-text-color);
+    cursor: pointer;
+}
+
+/* Ensure responsiveness */
+@media (max-width: 450px) {
+    .date-picker-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #prevDayBtn,
+    #nextDayBtn,
+    #datePicker {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.progress {
+    color: var(--medium-text-color);
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-goal-btn {
+    margin-left: 10px;
+    border: none;
+    width: 18px;
+    height: 18px;
+    background: url(../assets/icons8-edit-48.png) no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    cursor: pointer;
+    transition: .2s linear;
+}
+
+.edit-goal-btn:hover {
+    opacity: .8;
+}
+
+/* --- Meal form styles --- */
+
+.meal-id-input {
+    display: none;
+}
+
+.meal-form[data-mode="add"] .cancel-btn,
+.meal-form[data-mode="add"] .delete-btn {
+    display: none;
+}
+
+.meal-form .form-inputs {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-inputs > input:nth-of-type(2) {
+    margin-right: 20px;
+}
+
+.form-inputs > input {
+    color: var(--primary-text-color);
+    font-weight: 600;
+    margin: 1rem 0;
+    padding: .2rem 1rem;
+    width: 45%;
+    border: none;
+    border-bottom: 1px solid var(--primary-text-color);
+    background-color: var(--container-background-color);
+}
+
+.form-inputs > input::placeholder {
+    color: var(--secondary-text-color);
+}
+
+.form-inputs > input:-webkit-autofill,
+.form-inputs > input:-webkit-autofill:hover,
+.form-inputs > input:-webkit-autofill:focus,
+.form-inputs > input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--primary-text-color) !important;
+}
+
+.form-inputs > input:focus {
+    outline: none;
+}
+
+.meal-form .form-btn {
+    margin: 0 1rem;
+}
+
+.form-btns {
+    display: flex;
+    justify-content: center;
+    margin: .5rem .5rem 1rem .5rem;
+}
+
+.form-btn {
+    font-weight: 600;
+    color: #ededed;
+    border-radius: 5px;
+    border: none;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: .2s linear;
+}
+
+.meal-form[data-mode="add"] .save-btn {
+    padding: 0.5rem 3rem;
+}
+
+.cancel-btn {
+    color: var(--secondary-text-color);
+    background: var(--backround-color);
+}
+
+.cancel-btn:hover {
+    color: var(--primary-text-color);
+}
+
+.save-btn:hover, 
+.delete-btn:hover {
+    color: #fff;
+}
+
+.save-btn {
+    background: var(--general-btns-color);
+}
+
+.delete-btn {
+    background: #ea3642;
+}
+
+/* --- Meals list styles --- */
+
+.meals-list {
+    color: #1a2730;
+    padding-left: 0;
+}
+
+.list-item {
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--backround-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.list-content {
+    display: flex;
+}
+
+.list-content .meal-display {
+    font-weight: 600;
+}
+
+.list-content .calories-display {
+    margin-left: 10px;
+}
+
+.edit-meal-btn {
+    border: none;
+    width: 20px;
+    height: 20px;
+    background: url(../assets/icons8-settings-50.png) no-repeat;
+    background-size: 20px 20px;
+    cursor: pointer;
+    transition: .2s linear;
+}
+
+.edit-meal-btn:hover {
+    opacity: .7;
+    transform: rotate(45deg);
+}
+
+.clear-all-btn {
+    font-family: "Fredoka", sans-serif;
+    font-size: 1rem;
+    color: var(--medium-text-color);
+    border: none;
+    background-color: transparent;
+    margin: 10px auto 0;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+}
+
+.clear-all-btn:hover::before {
+    transform: scale(1);
+}
+
+.clear-all-btn::before {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: var(--medium-text-color);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: scale(0);
+    transition: .2s linear;
+}
+
+/* --- Modal window styles --- */
+
+.modal {
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: .3s linear;
+}
+
+.modal {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.modal.active {
+    opacity: 1;
+    background-color: var(--modal-backdrop-color);
+    transform: translateY(0);
+}
+
+.modal .modal-content {
+    font-weight: 500;
+    margin: 150px 10px 10px 10px;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    background-color: var(--container-background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    max-width: 600px;
+    min-width: 235px;
+    max-height: 120px;
+}
+
+.modal .modal-content > p {
+    color: var(--primary-text-color);
+    text-align: center;
+}
+
+.modal .modal-content .goal-form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal .modal-content .goal-form > input {
+    color: var(--primary-text-color);
+    background-color: var(--container-background-color);
+    font-weight: 500;
+    text-align: center;
+    width: 65%;
+    border: none;
+    border-bottom: 1px solid var(--primary-text-color);
+}
+
+.modal .modal-content .goal-form > input:focus {
+    outline: none;
+}
+
+.modal .goal-continue-btn {
+    border: none;
+    background-color: #2C8A3E;
+    transition: .2s linear;
+}
+
+.modal .goal-continue-btn:hover {
+    color: #fff;
+}
+
+.developer {
+    color: var(--medium-text-color);
+    display: flex;
+    justify-content: center;
+}
+
+.developer > a {
+    font-weight: 600;
+    color: var(--primary-text-color);
+    text-decoration: none;
+    margin-left: 5px;
+    display: flex;
+}
+
+.developer .git-icon {
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background-image: var(--git-icon);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+}
+
+@media (max-width: 900px) {
+    .container {
+        width: 70%;
+    }
+}
+
+@media (max-width: 670px) {
+    .container {
+        width: 90%;
+    }
+}
+input[type="date"] {
+    display: none; /* Hide default input */
+}
+
+@media (max-width: 450px) {
+    .modal .modal-content {
+        max-height: 150px;
+    }
+
+    .modal .modal-content .goal-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .modal .modal-content .goal-form > input {
+        margin-bottom: 10px;
+        width: 50%;
+    }
+
+    .modal .modal-content .goal-form > botton {
+        width: 50%;
+    }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <link rel="icon" type="image/x-icon" href="./assets/calories.png">
+    <link rel="stylesheet" id="themeStylesheetLink" href="./css/themes/light.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</head>
+<body>
+    <div id="goalSetupDialog" class="modal">
+        <div class="modal-content">
+            <p>Please, set up your calories goal per day:</p>
+            <form id="goalForm" class="goal-form">
+                <input type="number" id="goalInput" value="2000" step="100" min="1200" max="5000" />
+                <button class="form-btn goal-continue-btn">Continue</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">Calorie Tracker</h1>
+            <label class="theme-toggler">
+                <input type="checkbox" id="themeToggler" />
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Date Selection -->
+        <div class="date-picker-container">
+            <button id="prevDayBtn" class="form-btn">Previous Day</button>
+            <input type="date" id="datePicker" />
+            <button id="nextDayBtn" class="form-btn">Next Day</button>
+        </div>
+
+        <div>
+            <div class="circle-container">
+                <svg id="circularProgress" class="circular-progress"
+                    width="100" height="100" viewBox="0 0 100 100" 
+                    style="--progress: 0"
+                >
+                    <circle class="bg"
+                      cx="50" cy="50" r="45" fill="none" stroke-width="10"
+                    ></circle>
+                    <circle class="fg"
+                      cx="50" cy="50" r="45" fill="none" stroke-width="10"
+                    ></circle>
+                    <text 
+                        id="persents" x="50%" y="50%" text-anchor="middle" 
+                        stroke="#BFBFBF" stroke-width="1px" dy=".3em"
+                    ></text>
+                </svg>
+            </div>
+            <div class="progress">
+                <div><span id="total">0</span> / <span id="goal">0</span> Calories</div>
+                <button id="editGoalBtn" class="edit-goal-btn" title="Edit Goal"></button>
+            </div>
+        </div>
+        
+
+        <form id="mealForm" data-mode="add" class="meal-form">
+            <div class="form-inputs">
+                <input type="number" id="mealIdInput" class="meal-id-input" />
+                <input type="text" placeholder="Meal" id="mealInput" required />
+                <input type="number" placeholder="Calories" id="caloriesInput" min="0" required />
+            </div>
+            <div class="form-btns">
+                <button type="button" id="cancelBtn" class="form-btn cancel-btn">Cancel</button>
+                <button type="submit" class="form-btn save-btn">Save</button>
+                <button type="button" id="deleteBtn" class="form-btn delete-btn">Delete</button>
+            </div>
+        </form>
+
+        <ul id="mealsList" class="meals-list"></ul>
+        <button id="clearAllBtn" class="clear-all-btn">Clear All</button>
+    </div>
+
+    <div class="developer">
+        Created by 
+        <a href="https://github.com/somnathai" target="_blank">
+            somnathai
+            <span class="git-icon"></span>
+        </a>
+    </div>
+    
+    
+    <template id="listItemTemplate">
+        <li class="list-item">
+            <div class="list-content">
+                <div><span class="meal-display"></span>: </div>
+                <div><span class="calories-display"></span> calories</div>
+            </div>
+            <button class="edit-meal-btn" title="Edit Meal"></button>
+        </li>
+    </template>
+
+    <script src="./app.js"></script>
+    <script src="./themeSwitch.js"></script>
+</body>
+</html>
