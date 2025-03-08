@@ -499,11 +499,18 @@ circle.fg {
         width: 90%;
     }
 }
+
 input[type="date"] {
     background-color: #fff; /* Ensure visibility */
     color: black; /* Make text readable */
-    width: 100%; /* Adjust width */
+    width: 20%; /* Adjust width */
+    padding: 8px; /* Add some padding */
+    font-size: 16px; /* Increase font size */
+    border: 2px solid black; /* Thin black outer line */
+    border-radius: 5px; /* Slightly rounded corners */
+    text-align: center; /* Center the text */
 }
+
 @media (max-width: 768px) {
     input[type="date"] {
         min-width: 120px; /* Ensure it’s not too small */
