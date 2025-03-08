@@ -6,7 +6,7 @@ A minimalist app that will help you track your daily calorie intake. You can add
 
 **All data saves in localStorage.**
 
-Live Demo: https://juliabgkv.github.io/calorie-tracker/
+Live Demo: calorie-tracker-delta.vercel.app
 
 
 ## Tools 🛠
