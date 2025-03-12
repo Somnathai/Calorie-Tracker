@@ -245,7 +245,7 @@ circle.fg {
 
 .form-inputs > input {
     color: var(--primary-text-color);
-    font-weight: 600;
+    font-weight: 200;
     margin: 1rem 0;
     padding: .2rem 1rem;
     width: 45%;
