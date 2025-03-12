@@ -89,7 +89,7 @@ function updateCalories() {
     const caloriesPer100g = parseFloat(mealInput.dataset.caloriesPer100g || 0);
     const weight = parseFloat(weightInput.value || 0);
     const calculatedCalories = (caloriesPer100g * weight) / 100;
-    caloriesInput.value = calculatedCalories.toFixed(2);
+    caloriesInput.value = Math.round(calculatedCalories); // Round to integer
 }
 
 function init() {
@@ -133,7 +133,7 @@ function handleMealFormSubmit(e) {
             id: new Date().valueOf(),
             meal: mealInput.value.trim(),
             weight: +weightInput.value,
-            calories: +caloriesInput.value
+            calories: Math.round(+caloriesInput.value) // Round calories to integer
         };
 
         currentMeals.total += newMeal.calories;
@@ -144,7 +144,7 @@ function handleMealFormSubmit(e) {
             id: mealIdInput.value,
             meal: mealInput.value.trim(),
             weight: +weightInput.value,
-            calories: +caloriesInput.value
+            calories: Math.round(+caloriesInput.value) // Round calories to integer
         };
 
         let index = currentMeals.meals.findIndex(meal => meal.id == mealIdInput.value);
@@ -276,6 +276,10 @@ function updateCircularProgressBar() {
 
     circularProgress.style.setProperty('--progress', percentage);
     persentsDisplay.textContent = `${percentage} %`;
+
+    // Update the calorie display with integer values
+    totalDisplay.textContent = Math.round(currentMeals.total); // Round total calories
+    goalDisplay.textContent = Math.round(caloriesData.goal); // Round goal calories
 }
 document.addEventListener("DOMContentLoaded", function () {
     // Function to get saved dates from `caloriesData`
