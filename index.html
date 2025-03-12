@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="./css/common.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
 </head>
 <body>
     <div id="goalSetupDialog" class="modal">
@@ -60,14 +59,16 @@
                 <button id="editGoalBtn" class="edit-goal-btn" title="Edit Goal"></button>
             </div>
         </div>
-        
 
+        <!-- Meal Form -->
         <form id="mealForm" data-mode="add" class="meal-form">
             <div class="form-inputs">
-                <input type="number" id="mealIdInput" class="meal-id-input" />
+                <input type="number" id="mealIdInput" class="meal-id-input" hidden />
                 <input type="text" placeholder="Meal" id="mealInput" required />
-                <input type="number" placeholder="Calories" id="caloriesInput" min="0" required />
+                <input type="number" placeholder="Weight (grams)" id="weightInput" min="0" required />
+                <input type="number" placeholder="Calories" id="caloriesInput" min="0" readonly />
             </div>
+            
             <div class="form-btns">
                 <button type="button" id="cancelBtn" class="form-btn cancel-btn">Cancel</button>
                 <button type="submit" class="form-btn save-btn">Save</button>
@@ -75,6 +76,7 @@
             </div>
         </form>
 
+        <!-- Meals List -->
         <ul id="mealsList" class="meals-list"></ul>
         <button id="clearAllBtn" class="clear-all-btn">Clear All</button>
     </div>
@@ -87,7 +89,7 @@
         </a>
     </div>
     
-    
+    <!-- Template for List Items -->
     <template id="listItemTemplate">
         <li class="list-item">
             <div class="list-content">
