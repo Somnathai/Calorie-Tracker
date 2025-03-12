@@ -9,6 +9,74 @@
     <link rel="stylesheet" href="./css/common.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        /* Custom CSS for the form */
+        .meal-form {
+            
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between input fields */
+            max-width: 400px; /* Limit form width */
+            margin: 0 auto; /* Center the form */
+        }
+
+        .form-inputs {
+            display: flex;
+            
+            flex-direction: column;
+            gap: 10px; /* Space between input fields */
+        }
+
+        .form-inputs input {
+            margin-bottom: -10px;
+            width: 100%; /* Full width */
+            padding: 10px; /* Padding inside input fields */
+            border: 1px solid #ccc; /* Border color */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+            outline: none; /* Remove default outline */
+            transition: border-color 0.3s ease; /* Smooth transition for focus */
+        }
+
+        .form-inputs input:focus {
+            border-color: #5394fd; /* Highlight border on focus */
+        }
+
+        .form-btns {
+            display: flex;
+            justify-content: space-between; /* Space buttons evenly */
+            gap: 10px; /* Space between buttons */
+        }
+
+        .form-btns button {
+            flex: 1; /* Equal width for buttons */
+            padding: 10px; /* Padding inside buttons */
+            border: none; /* Remove default border */
+            border-radius: 25px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .form-btns .save-btn {
+            background-color: #5394fd; /* Blue background for save button */
+            color: white; /* White text */
+        }
+
+        .form-btns .cancel-btn {
+            background-color: #ccc; /* Gray background for cancel button */
+            color: black; /* Black text */
+        }
+
+        .form-btns .delete-btn {
+            background-color: #ea3642; /* Red background for delete button */
+            color: white; /* White text */
+        }
+
+        .form-btns button:hover {
+            opacity: 0.9; /* Slightly fade on hover */
+        }
+    </style>
 </head>
 <body>
     <div id="goalSetupDialog" class="modal">
