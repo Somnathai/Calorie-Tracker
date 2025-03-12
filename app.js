@@ -1,4 +1,6 @@
 const STORAGE_KEY = 'calories-app';
+const API_KEY = 'TzS08MjwrkBvspQVkh5FKw==SeeWDtp85qqeJLZC'; // Replace with your API key
+const API_ENDPOINT = 'https://api.calorieninjas.com/v1/nutrition';
 
 const goalSetupDialog = document.getElementById('goalSetupDialog');
 const totalDisplay = document.getElementById('total');
@@ -7,6 +9,7 @@ const mealForm = document.getElementById('mealForm');
 const mealIdInput = document.getElementById('mealIdInput');
 const goalInput = document.getElementById('goalInput');
 const mealInput = document.getElementById('mealInput');
+const weightInput = document.getElementById('weightInput');
 const caloriesInput = document.getElementById('caloriesInput');
 const listItemTemplate = document.getElementById('listItemTemplate');
 const mealsList = document.getElementById('mealsList');
@@ -20,6 +23,7 @@ const nextDayBtn = document.getElementById('nextDayBtn');
 let caloriesData = null;
 let editingCalories = 0;
 let selectedDate = new Date().toISOString().split('T')[0]; // Default: Today
+let mealCalorieCache = {}; // Cache for meal calorie data
 
 document.getElementById('goalForm').addEventListener('submit', handleGoalFormSubmit);
 document.getElementById('editGoalBtn').addEventListener('click', handleEditGoalBtnClick);
@@ -33,6 +37,60 @@ prevDayBtn.addEventListener('click', () => shiftDate(-1));
 nextDayBtn.addEventListener('click', () => shiftDate(1));
 
 init();
+
+// Fetch calories when the meal is selected
+mealInput.addEventListener('input', async () => {
+    const mealName = mealInput.value.trim();
+    if (mealName.length > 2) {
+        const caloriesPer100g = await getMealCalories(mealName);
+        if (caloriesPer100g !== null) {
+            mealInput.dataset.caloriesPer100g = caloriesPer100g;
+            updateCalories();
+        }
+    }
+});
+
+// Recalculate calories when weight changes
+weightInput.addEventListener('input', updateCalories);
+
+// Get meal calories (with caching)
+async function getMealCalories(meal) {
+    // Check if the meal data is already cached
+    if (mealCalorieCache[meal]) {
+        return mealCalorieCache[meal];
+    }
+
+    // Fetch from API if not cached
+    const caloriesPer100g = await fetchMealCalories(meal);
+    if (caloriesPer100g !== null) {
+        mealCalorieCache[meal] = caloriesPer100g; // Cache the result
+    }
+    return caloriesPer100g;
+}
+
+// Fetch meal calories from API
+async function fetchMealCalories(meal) {
+    try {
+        const response = await fetch(`${API_ENDPOINT}?query=${meal}`, {
+            headers: { 'X-Api-Key': API_KEY }
+        });
+        const data = await response.json();
+        if (data.items.length > 0) {
+            return data.items[0].calories;
+        }
+    } catch (error) {
+        console.error('Error fetching meal data:', error);
+    }
+    return null;
+}
+
+// Calculate calories based on weight and meal data
+function updateCalories() {
+    const caloriesPer100g = parseFloat(mealInput.dataset.caloriesPer100g || 0);
+    const weight = parseFloat(weightInput.value || 0);
+    const calculatedCalories = (caloriesPer100g * weight) / 100;
+    caloriesInput.value = calculatedCalories.toFixed(2);
+}
 
 function init() {
     datePicker.value = selectedDate;
@@ -74,6 +132,7 @@ function handleMealFormSubmit(e) {
         const newMeal = {
             id: new Date().valueOf(),
             meal: mealInput.value.trim(),
+            weight: +weightInput.value,
             calories: +caloriesInput.value
         };
 
@@ -84,6 +143,7 @@ function handleMealFormSubmit(e) {
         const editedMeal = {
             id: mealIdInput.value,
             meal: mealInput.value.trim(),
+            weight: +weightInput.value,
             calories: +caloriesInput.value
         };
 
@@ -117,7 +177,7 @@ function updateMealsForSelectedDate() {
 function renderListItem(item) {
     const clone = listItemTemplate.content.cloneNode(true);
     clone.querySelector('li').dataset.itemId = item.id;
-    clone.querySelector('.meal-display').textContent = item.meal;
+    clone.querySelector('.meal-display').textContent = `${item.meal} (${item.weight}g)`;
     clone.querySelector('.calories-display').textContent = item.calories;
     mealsList.appendChild(clone);
 }
@@ -130,6 +190,7 @@ function handleOnMealsListClick(e) {
 
         mealIdInput.value = currItem.id;
         mealInput.value = currItem.meal;
+        weightInput.value = currItem.weight;
         caloriesInput.value = currItem.calories;
         editingCalories = currItem.calories;
 
@@ -184,7 +245,7 @@ function shiftDate(days) {
     updateMealsForSelectedDate();
 }
 
-// ✅ Highlight Dates in the Calendar that Have Meals
+// Highlight Dates in the Calendar that Have Meals
 function highlightMealDates() {
     let allDates = Object.keys(caloriesData.mealsByDate || {});
 
@@ -256,5 +317,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
